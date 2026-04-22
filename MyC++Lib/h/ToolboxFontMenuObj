@@ -1,0 +1,31 @@
+#ifndef __cplusplus
+#error Header file "ToolboxFontMenuObj.h" may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef __ToolboxFontMenuObj_h
+#define __ToolboxFontMenuObj_h
+
+#include "fontmenu.h"
+#include "ClassType.h"
+#include "ToolboxObj.h"
+
+class ToolboxFontMenuObj : public ToolboxObj {
+  public:
+    ToolboxFontMenuObj();
+    ToolboxFontMenuObj(ObjectId objectId);
+    ToolboxFontMenuObj(IdBlock *idBlock);
+    ToolboxFontMenuObj& setFont(char *fontId);
+    int getFont();
+    int getFont(char *buffer, int bufSize);
+    ToolboxFontMenuObj& setObjectId(ObjectId objectId);
+    ToolboxFontMenuObj& setFlags(unsigned int flags);
+    ToolboxFontMenuObj& clearFlags();
+
+    void showProperties() {}
+    char* getClassName() { return "ToolboxFontMenuObj";}
+    int getClassType() { return ClassType_ToolboxFontMenuObj;}
+};
+
+#endif

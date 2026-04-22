@@ -1,0 +1,66 @@
+#include "ToolboxActionButton.h"
+
+ToolboxActionButton::ToolboxActionButton() : ToolboxGadget() {}
+
+ToolboxActionButton::ToolboxActionButton(ObjectId windowId, ComponentId gadgetId) : ToolboxGadget(windowId, gadgetId) {}
+
+ToolboxActionButton::ToolboxActionButton(ObjectId windowId, ComponentId gadgetId, unsigned int flags) : ToolboxGadget(windowId, gadgetId, flags) {}
+
+ToolboxActionButton& ToolboxActionButton::setText(char *text) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) text;
+  this->gadgetMethod(ActionButton_SetText, &regs);
+  return *this;
+}
+
+int ToolboxActionButton::getText() {
+  _kernel_swi_regs regs;
+  regs.r[4] = 0;
+  this->gadgetMethod(ActionButton_GetText, &regs);
+  return regs.r[5];
+}
+
+int ToolboxActionButton::getText(char *buffer, int bufSize) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) buffer;
+  regs.r[5] = bufSize;
+  this->gadgetMethod(ActionButton_GetText, &regs);
+  return regs.r[5];
+}
+
+ToolboxActionButton& ToolboxActionButton::setEvent(int eventCode) {
+  _kernel_swi_regs regs;
+  regs.r[4] = eventCode;
+  this->gadgetMethod(ActionButton_SetEvent, &regs);
+  return *this;
+}
+
+int ToolboxActionButton::getEvent() {
+  _kernel_swi_regs regs;
+  this->gadgetMethod(ActionButton_GetEvent, &regs);
+  return regs.r[0];
+}
+
+ToolboxActionButton& ToolboxActionButton::setClickShow(ObjectId id, unsigned int showFlags) {
+  _kernel_swi_regs regs;
+  regs.r[4] = id;
+  regs.r[5] = showFlags;
+  this->gadgetMethod(ActionButton_SetClickShow, &regs);
+  return *this;
+}
+
+void ToolboxActionButton::getClickShow(ObjectId *id, unsigned int *showFlags) {
+  _kernel_swi_regs regs;
+  this->gadgetMethod(ActionButton_GetClickShow, &regs);
+  *id = regs.r[0];
+  *showFlags = regs.r[1];
+}
+
+ToolboxActionButton& ToolboxActionButton::setFont(const char *fontName, unsigned int width, unsigned int height) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) fontName;
+  regs.r[5] = width;
+  regs.r[6] = height;
+  this->gadgetMethod(ActionButton_SetFont, &regs);
+  return *this;
+}

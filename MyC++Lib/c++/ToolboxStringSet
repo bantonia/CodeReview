@@ -1,0 +1,85 @@
+#include "ToolboxStringSet.h"
+
+
+ToolboxStringSet::ToolboxStringSet() : ToolboxGadget() {}
+
+ToolboxStringSet::ToolboxStringSet(ObjectId windowId, ComponentId gadgetId) : ToolboxGadget(windowId, gadgetId) {}
+
+ToolboxStringSet::ToolboxStringSet(ObjectId windowId, ComponentId gadgetId, unsigned int flags) : ToolboxGadget(windowId, gadgetId, flags) {}
+
+ToolboxStringSet& ToolboxStringSet::setAvailable(char *strings) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) strings;
+  this->gadgetMethod(StringSet_SetAvailable, &regs);
+  return *this;
+}
+
+ToolboxStringSet& ToolboxStringSet::setSelected(char *stringToSelect) {
+  _kernel_swi_regs regs;
+  this->setFlags(0);
+  regs.r[4] = (int) stringToSelect;
+  this->gadgetMethod(StringSet_SetSelected, &regs);
+  return *this;
+}
+
+ToolboxStringSet& ToolboxStringSet::setSelected(int stringToSelect) {
+  _kernel_swi_regs regs;
+  this->setFlags(1);
+  regs.r[4] = stringToSelect;
+  this->gadgetMethod(StringSet_SetSelected, &regs);
+  return *this;
+}
+
+int ToolboxStringSet::getSelected() {
+  _kernel_swi_regs regs;
+  this->setFlags(0);
+  regs.r[4] = 0;
+  this->gadgetMethod(StringSet_GetSelected, &regs);
+  return regs.r[5];
+}
+
+int ToolboxStringSet::getSelected(char *buffer, int bufSize) {
+  _kernel_swi_regs regs;
+  this->setFlags(0);
+  regs.r[4] = (int) buffer;
+  regs.r[5] = bufSize;
+  this->gadgetMethod(StringSet_GetSelected, &regs);
+  return regs.r[5];
+}
+
+int ToolboxStringSet::getSelectedIndex() {
+  _kernel_swi_regs regs;
+  this->setFlags(1);
+  this->gadgetMethod(StringSet_GetSelected, &regs);
+  return regs.r[0];
+}
+
+ToolboxStringSet& ToolboxStringSet::setAllowable(char *allowable) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) allowable;
+  this->gadgetMethod(StringSet_SetAllowable, &regs);
+  return *this;
+}
+
+ComponentId ToolboxStringSet::getPopUpMenuId() {
+  _kernel_swi_regs regs;
+  this->setFlags(0);
+  this->gadgetMethod(StringSet_GetSelected, &regs);
+  return regs.r[1];
+}
+
+ComponentId ToolboxStringSet::getAlphanumericFieldId() {
+  _kernel_swi_regs regs;
+  this->setFlags(1);
+  this->gadgetMethod(StringSet_GetSelected, &regs);
+  return regs.r[0];
+}
+
+ToolboxStringSet& ToolboxStringSet::setFont(char *fontName, int width, int height) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) fontName;
+  regs.r[5] = width;
+  regs.r[6] = height;
+  this->gadgetMethod(StringSet_SetFont, &regs);
+  return *this;
+}

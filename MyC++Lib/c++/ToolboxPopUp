@@ -1,0 +1,20 @@
+#include "ToolboxPopUp.h"
+
+ToolboxPopUp::ToolboxPopUp() : ToolboxGadget() {}
+
+ToolboxPopUp::ToolboxPopUp(ObjectId windowId, ComponentId gadgetId) : ToolboxGadget(windowId, gadgetId) {}
+
+ToolboxPopUp::ToolboxPopUp(ObjectId windowId, ComponentId gadgetId, unsigned int flags) : ToolboxGadget(windowId, gadgetId, flags) {}
+
+ToolboxPopUp& ToolboxPopUp::setMenu(ObjectId menu) {
+  _kernel_swi_regs regs;
+  regs.r[4] = menu;
+  this->gadgetMethod(PopUp_SetMenu, &regs);
+  return *this;
+}
+
+ObjectId ToolboxPopUp::getMenu() {
+  _kernel_swi_regs regs;
+  this->gadgetMethod(PopUp_GetMenu, &regs);
+  return regs.r[0];
+}

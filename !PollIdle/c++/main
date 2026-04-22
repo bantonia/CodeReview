@@ -1,0 +1,40 @@
+#include "PollIdleExample.h"
+
+//***************
+#include "CathLibCpp:algorithm.h"
+#include "CathLibCpp:vector.h"
+
+int data[] =
+{
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+};
+//***************
+
+int main() {
+
+//*********************
+  vector<int> v1(&data[0], &data[10]);
+  vector<int> v2(v1);
+  v1.insert(find(v1.begin(), v1.end(), 4), 10, 123);
+  v1.erase(v1.begin(), v1.begin()+2);
+//*********************
+
+  PollIdleExample *task = new PollIdleExample();
+  task->initTask("<PollIdle$Dir>");
+  task->setMask(256);
+  task->setPollIdleInterval(1);
+  while (!task->quit) {
+    task->runIdle();
+  }
+  delete task;
+  return 0;
+}

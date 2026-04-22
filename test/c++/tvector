@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include "CathLibCpp:algorithm.h"
+#include "CathLibCpp:vector.h"
+
+
+void print_int(int i)
+{
+  printf("%i\n", i);
+}
+
+int data[] =
+{
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+};
+
+void main()
+{
+  vector<int> v1(&data[0], &data[10]);
+  vector<int> v2(v1);
+
+//  printf("v1 == v2: %i\n\n", v1 == v2);
+
+  for_each(v1.begin(), v1.end(), print_int);
+  print_int(v1.size());
+  printf("\n");
+
+  for_each(v1.rbegin(), v1.rend(), print_int);
+  printf("\n");
+
+  v1.insert(find(v1.begin(), v1.end(), 4), 10, 123);
+  for_each(v1.begin(), v1.end(), print_int);
+  print_int(v1.size());
+  printf("\n");
+
+  v1.erase(v1.begin(), v1.begin()+2);
+  for_each(v1.begin(), v1.end(), print_int);
+  print_int(v1.size());
+  printf("\n");
+
+//  printf("v1 == v2: %i\n\n", v1 == v2);
+}

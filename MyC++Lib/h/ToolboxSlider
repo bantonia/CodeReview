@@ -1,0 +1,30 @@
+#ifndef __cplusplus
+#error Header file "ToolboxSlider.h" may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef __ToolboxSlider_h
+#define __ToolboxSlider_h
+
+#include "ClassType.h"
+#include "ToolboxGadget.h"
+
+class ToolboxSlider : public ToolboxGadget {
+  public:
+    ToolboxSlider();
+    ToolboxSlider(ObjectId windowId, ComponentId gadgetId);
+    ToolboxSlider(ObjectId windowId, ComponentId gadgetId, unsigned int flags);
+    ToolboxSlider& setValue(int value);
+    int getValue();
+    ToolboxSlider& setBounds(int lowerBound, int upperBound, int stepSize);
+    void getBounds(int *lowerBound, int *upperBound, int *stepSize);
+    ToolboxSlider& setColour(int barColour, int backColour);
+    void getColour(int *barColour, int *backColour);
+
+    void showProperties() {}
+    char* getClassName() { return "ToolboxSlider";}
+    int getClassType() { return ClassType_ToolboxSlider;}
+};
+
+#endif

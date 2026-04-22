@@ -1,0 +1,28 @@
+#ifndef __cplusplus
+#error Header file "Object.h" may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef OBJECT_H
+#define OBJECT_H
+
+/** Object
+*
+* CommonC++Lib
+*
+* Class to use as a base class to enable passing of objects as a generalised parameter
+*/
+
+class Object {
+  public:
+    Object();
+    virtual void showProperties() = 0;
+    virtual char* getClassName() = 0;
+    virtual int getClassType() = 0;
+  protected:
+    ~Object();
+
+};
+
+#endif

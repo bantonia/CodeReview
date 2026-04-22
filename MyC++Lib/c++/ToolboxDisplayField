@@ -1,0 +1,56 @@
+#include "ToolboxDisplayField.h"
+#include "OS.h"
+
+ToolboxDisplayField::ToolboxDisplayField() {};
+
+ToolboxDisplayField::ToolboxDisplayField(ObjectId windowId, ComponentId gadgetId) : ToolboxGadget(windowId, gadgetId) {}
+
+ToolboxDisplayField::ToolboxDisplayField(ObjectId windowId, ComponentId gadgetId, unsigned int flags) : ToolboxGadget(windowId, gadgetId, flags) {}
+
+ToolboxDisplayField& ToolboxDisplayField::setValue(char *text) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) text;
+  this->gadgetMethod(DisplayField_SetValue, &regs);
+  return *this;
+}
+
+ToolboxDisplayField& ToolboxDisplayField::setValue(int value) {
+  _kernel_swi_regs regs;
+  char buffer[256];
+  int size = 256;
+  OS::binaryToDecimal(value, buffer, &size);
+  regs.r[4] = (int)buffer;
+  this->gadgetMethod(DisplayField_SetValue, &regs);
+  return *this;
+}
+
+int ToolboxDisplayField::getValue() {
+  _kernel_swi_regs regs;
+  regs.r[4] = 0;
+  this->gadgetMethod(DisplayField_GetValue, &regs);
+  return regs.r[5];
+}
+
+int ToolboxDisplayField::getIntValue() {
+  char buffer[32];
+  int size = this->getValue();
+  this->getValue(buffer, size);
+  return OS::evaluateExpression(buffer, 0, 0);
+}
+
+int ToolboxDisplayField::getValue(char *buffer, int bufSize) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) buffer;
+  regs.r[5] = bufSize;
+  this->gadgetMethod(DisplayField_GetValue, &regs);
+  return regs.r[5];
+}
+
+ToolboxDisplayField& ToolboxDisplayField::setFont(char *fontName, int width, int height) {
+  _kernel_swi_regs regs;
+  regs.r[4] = (int) fontName;
+  regs.r[5] = width;
+  regs.r[6] = height;
+  this->gadgetMethod(DisplayField_SetFont, &regs);
+  return *this;
+}

@@ -1,0 +1,33 @@
+#ifndef __cplusplus
+#error Header file "ToolboxActionButton.h" may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef __ToolboxActionButton_h
+#define __ToolboxActionButton_h
+
+#include "ClassType.h"
+#include "ToolboxGadget.h"
+
+class ToolboxActionButton : public ToolboxGadget {
+  public:
+
+    ToolboxActionButton();
+    ToolboxActionButton(ObjectId windowId, ComponentId gadgetId);
+    ToolboxActionButton(ObjectId windowId, ComponentId gadgetId, unsigned int flags);
+    ToolboxActionButton& setText(char *text);
+    int getText();
+    int getText(char *buffer, int bufSize);
+    ToolboxActionButton& setEvent(int eventCode);
+    int getEvent();
+    ToolboxActionButton& setClickShow(ObjectId id, unsigned int showFlags);
+    void getClickShow(ObjectId *id, unsigned int *showFlags);
+    ToolboxActionButton& setFont(const char *fontName, unsigned int width, unsigned int height);
+
+    void showProperties() {}
+    char* getClassName() { return "ToolboxActionButton";}
+    int getClassType() { return ClassType_ToolboxActionButton;}
+};
+
+#endif

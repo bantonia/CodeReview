@@ -1,0 +1,37 @@
+#ifndef __cplusplus
+#error Header file "ToolboxDCSObj.h" may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef __ToolboxDCSObj_h
+#define __ToolboxDCSObj_h
+
+#include "toolbox.h"
+#include "dcs.h"
+#include "ClassType.h"
+#include "ToolboxObj.h"
+
+class ToolboxDCSObj : public ToolboxObj {
+  public:
+    ToolboxDCSObj();
+    ToolboxDCSObj(ObjectId objectId);
+    ToolboxDCSObj(IdBlock *idBlock);
+    ~ToolboxDCSObj();
+    int getWindowId();
+    ToolboxDCSObj& setMessage(char *message);
+    int getMessage();
+    int getMessage(char *messageBuffer, int bufSize);
+    ToolboxDCSObj& setTitle(char *title);
+    int getTitle();
+    int getTitle(char *titleBuffer, int bufSize);
+    ToolboxDCSObj& setObjectId(ObjectId objectId);
+    ToolboxDCSObj& setFlags(unsigned int flags);
+    ToolboxDCSObj& clearFlags();
+
+    void showProperties(){}
+    char* getClassName() { return "ToolboxDCSObj";}
+    int getClassType() { return ClassType_ToolboxDCSObj;}
+};
+
+#endif

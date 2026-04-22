@@ -1,0 +1,32 @@
+#ifndef __cplusplus
+#error Header file "OS.h" may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef __OS_h
+#define __OS_h
+
+#include "ErrorReport.h"
+
+class OS : public ErrorReport {
+  public:
+    OS(){}
+    ~OS(){}
+    static unsigned int readMonotonicTime();
+    static unsigned int readModeVariable(int, int);
+    static char *binaryToDecimal(int, char *, int *);
+    static int evaluateExpression(char *, char *, int *);
+    static char *convertHex1(int, char *, int *);
+    static char *convertHex2(int, char *, int *);
+    static char *convertHex4(int, char *, int *);
+    static char *convertHex6(int, char *, int *);
+    static char *convertHex8(int, char *, int *);
+    static char *convertHex(int, char *, int *);
+    static void createDirectory(char *directoryName);
+    static unsigned int readUnsigned(int base, char *value, unsigned int maximum = 0);
+ 
+  private:
+};
+
+#endif

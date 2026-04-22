@@ -1,0 +1,48 @@
+#include "ToolboxNumberRange.h"
+
+ToolboxNumberRange::ToolboxNumberRange() : ToolboxGadget() {}
+
+ToolboxNumberRange::ToolboxNumberRange(ObjectId windowId, ComponentId gadgetId) : ToolboxGadget(windowId, gadgetId) {}
+
+ToolboxNumberRange::ToolboxNumberRange(ObjectId windowId, ComponentId gadgetId, unsigned int flags) : ToolboxGadget(windowId, gadgetId, flags) {}
+
+ToolboxNumberRange& ToolboxNumberRange::setValue(int value) {
+  _kernel_swi_regs regs;
+  regs.r[4] = value;
+  this->gadgetMethod(NumberRange_SetValue, &regs);
+  return *this;
+}
+
+int ToolboxNumberRange::getValue() {
+  _kernel_swi_regs regs;
+  this->gadgetMethod(NumberRange_GetValue, &regs);
+  return regs.r[0];
+}
+
+ToolboxNumberRange& ToolboxNumberRange::setBounds(int lowerBound, int upperBound, int stepSize, int precision) {
+  _kernel_swi_regs regs;
+  regs.r[4] = lowerBound;
+  regs.r[5] = upperBound;
+  regs.r[6] = stepSize;
+  regs.r[7] = precision;
+  this->gadgetMethod(NumberRange_SetBounds, &regs);
+  return *this;
+}
+
+void ToolboxNumberRange::getBounds(int *lowerBound, int *upperBound, int *stepSize, int *precision) {
+  _kernel_swi_regs regs;
+  this->gadgetMethod(NumberRange_GetBounds, &regs);
+  *lowerBound = regs.r[0];
+  *upperBound = regs.r[1];
+  *stepSize = regs.r[2];
+  *precision = regs.r[3];
+}
+
+void ToolboxNumberRange::getComponents(ComponentId *numericField, ComponentId *leftAdjuster, ComponentId *rightAdjuster, ComponentId *slider) {
+  _kernel_swi_regs regs;
+  this->gadgetMethod(NumberRange_GetComponents, &regs);
+  *numericField = regs.r[0];
+  *leftAdjuster = regs.r[1];
+  *rightAdjuster = regs.r[2];
+  *slider = regs.r[3];
+}

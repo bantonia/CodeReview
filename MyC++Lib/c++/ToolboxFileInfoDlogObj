@@ -1,0 +1,159 @@
+#include "kernel.h"
+#include "ToolboxFileInfoDlogObj.h"
+
+ToolboxFileInfoDlogObj::ToolboxFileInfoDlogObj() {}
+
+ToolboxFileInfoDlogObj::ToolboxFileInfoDlogObj(ObjectId objectId) : ToolboxObj(objectId) {}
+
+ToolboxFileInfoDlogObj::ToolboxFileInfoDlogObj(IdBlock *idBlock) : ToolboxObj(idBlock) {}
+
+ToolboxFileInfoDlogObj::~ToolboxFileInfoDlogObj() {}
+
+int ToolboxFileInfoDlogObj::getWindowId() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetWindowId;
+  this->objectMiscOp(&regs);
+  return regs.r[0];
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setModified() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetModified;
+  regs.r[3] = 1;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setModified(int modified) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetModified;
+  regs.r[3] = modified;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setNotModified() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetModified;
+  regs.r[3] = 0;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+int ToolboxFileInfoDlogObj::isModified() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetModified;
+  this->objectMiscOp(&regs);
+  return regs.r[0];
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setFileType(int fileType) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetFileType;
+  regs.r[3] = fileType;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+int ToolboxFileInfoDlogObj::getFileType() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetFileType;
+  this->objectMiscOp(&regs);
+  return regs.r[0];
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setFileName(char *fileName) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetFileName;
+  regs.r[3] = (int) fileName;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+int ToolboxFileInfoDlogObj::getFileName() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetFileName;
+  regs.r[3] = 0;
+  this->objectMiscOp(&regs);
+  return regs.r[4];
+}
+
+int ToolboxFileInfoDlogObj::getFileName(char *fileNameBuffer, int bufSize) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetFileName;
+  regs.r[3] = (int) fileNameBuffer;
+  regs.r[4] = bufSize;
+  this->objectMiscOp(&regs);
+  return regs.r[4];
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setFileSize(int fileSize) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetFileSize;
+  regs.r[3] = fileSize;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+int ToolboxFileInfoDlogObj::getFileSize() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetFileSize;
+  this->objectMiscOp(&regs);
+  return regs.r[0];
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setDate(int *UTC) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetDate;
+  regs.r[3] = (int) UTC;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::getDate(int *UTC) {
+ _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetDate;
+  regs.r[3] = (int) UTC;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setTitle(char *title) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_SetTitle;
+  regs.r[3] = (int) title;
+  this->objectMiscOp(&regs);
+  return *this;
+}
+
+int ToolboxFileInfoDlogObj::getTitleSize() {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetTitle;
+  regs.r[3] = 0;
+  this->objectMiscOp(&regs);
+  return regs.r[4];
+}
+
+int ToolboxFileInfoDlogObj::getTitle(char *titleBuffer, int bufSize) {
+  _kernel_swi_regs regs;
+  regs.r[2] = FileInfo_GetTitle;
+  regs.r[3] = (int) titleBuffer;
+  regs.r[4] = bufSize;
+  this->objectMiscOp(&regs);
+  return regs.r[4];
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setObjectId(ObjectId objectId) {
+  this->ToolboxObj::setObjectId(objectId);
+  return *this;
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::setFlags(unsigned int flags) {
+  this->ToolboxObj::setFlags(flags);
+  return *this;
+}
+
+ToolboxFileInfoDlogObj& ToolboxFileInfoDlogObj::clearFlags() {
+  this->ToolboxObj::clearFlags();
+  return *this;
+}

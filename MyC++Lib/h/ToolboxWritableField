@@ -1,0 +1,30 @@
+#ifndef __cplusplus
+#error Header file "ToolboxWritableField.h" may only be used from C++
+#endif
+#pragma force_top_level
+#pragma include_only_once
+
+#ifndef __ToolboxWritableField_h
+#define __ToolboxWritableField_h
+
+#include "ClassType.h"
+#include "ToolboxGadget.h"
+
+class ToolboxWritableField : public ToolboxGadget {
+  public:
+    ToolboxWritableField();
+    ToolboxWritableField(ObjectId windowId, ComponentId gadgetId);
+    ToolboxWritableField(ObjectId windowId, ComponentId gadgetId, unsigned int flags);
+    
+    ToolboxWritableField& setValue(char *value);
+    int getValue();
+    int getValue(char *buffer, int bufSize);
+    ToolboxWritableField& setAllowable(char *allowed);
+    ToolboxWritableField& setFont(char *fontName, int width, int height);
+
+    void showProperties() {}
+    char* getClassName() { return "ToolboxWritableField";}
+    int getClassType() { return ClassType_ToolboxWritableField;}
+};
+
+#endif
