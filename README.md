@@ -1,5 +1,6 @@
 !PollIdle<br/>
 I've added a few lines to test CathLibCPP to main introducing vector components, they do nothing for the program themselves. Removing or commenting out the the lines between the //********** will produce a runnable application.<br/>
+These extra lines have been taken from the test program below but removing the lines concerning output.<br/>
 Link object files with the following if not using anything from CathLibCPP:<br/>
 o.ToolboxC++Lib (from MyC++Lib)<br/>
 o.RiscOSC++Lib (from MyC++Lib)<br/>
